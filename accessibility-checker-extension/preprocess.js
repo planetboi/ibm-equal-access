@@ -17,6 +17,12 @@ function myExec(cmd)  {
 }
 
 (async () => {
-    await myExec(`sed -i'.old' -e "s/[\\"|']use strict[\\"|']//g" ./node_modules/exceljs/dist/exceljs.min.js`);
-    await myExec(`sed -i'.old' -e "s/[\\"|']use strict[\\"|']//g" ./node_modules/exceljs/dist/exceljs.js`);
-})()
+    await myExec(
+        `sed -i'.old' -e "s/[\\"|']use strict[\\"|']//g" ./node_modules/exceljs/dist/exceljs.min.js`
+    ).catch(() => {
+        console.log("Preprocess failed");
+    });
+    await myExec(
+        `sed -i'.old' -e "s/[\\"|']use strict[\\"|']//g" ./node_modules/exceljs/dist/exceljs.js`
+    ).catch(() => console.log("Preprocess failed"));
+})();
